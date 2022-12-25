@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AmazonPrimeClone</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title">Title</string>
+    <string name="trailers">Trailers</string>
+    <string name="cast">Cast</string>
+    <string name="seasons">Seasons</string>
+    <string name="recommendation">Recommendation</string>
+    <string name="image_desc">image_desc</string>
+</resources>

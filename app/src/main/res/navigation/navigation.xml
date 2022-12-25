@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.amazonprimeclone.fragments.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_seeAllFragment"
+            app:destination="@id/seeAllFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_movie_detail"
+            app:destination="@id/nav_movie_detail"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+        <action
+            android:id="@+id/action_nav_home_to_seriesDetailFragment"
+            app:destination="@id/seriesDetailFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+        <action
+            android:id="@+id/action_nav_home_to_seeAllSeriesFragment"
+            app:destination="@id/seeAllSeriesFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/nav_people"
+        android:name="com.example.amazonprimeclone.fragments.people.PeopleFragment"
+        android:label="fragment_people"
+        tools:layout="@layout/fragment_people" >
+        <action
+            android:id="@+id/action_nav_people_to_personDetailFragment"
+            app:destination="@id/personDetailFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.example.amazonprimeclone.fragments.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_nav_search_to_nav_movie_detail"
+            app:destination="@id/nav_movie_detail"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_movie"
+        android:name="com.example.amazonprimeclone.fragments.home.movie.MovieFragment"
+        android:label="fragment_movie"
+        tools:layout="@layout/fragment_movie" />
+    <fragment
+        android:id="@+id/nav_movie_detail"
+        android:name="com.example.amazonprimeclone.fragments.home.details.movie_detail.MovieDetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_movie_detail" >
+
+        <argument
+            android:name="movie_id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_nav_movie_detail_self"
+            app:destination="@id/nav_movie_detail"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+        <action
+            android:id="@+id/action_nav_movie_detail_to_personDetailFragment"
+            app:destination="@id/personDetailFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+        <action
+            android:id="@+id/action_nav_movie_detail_to_youtubeVideoFragment"
+            app:destination="@id/youtubeVideoFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/seeAllSeriesFragment"
+        android:name="com.example.amazonprimeclone.fragments.home.more.see_all_series.SeeAllSeriesFragment"
+        android:label="fragment_see_all_series"
+        tools:layout="@layout/fragment_see_all_series" >
+
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_seeAllSeriesFragment_to_seriesDetailFragment"
+            app:destination="@id/seriesDetailFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/seeAllFragment"
+        android:name="com.example.amazonprimeclone.fragments.home.more.see_all_movies.SeeAllMoviesFragment"
+        android:label="fragment_see_all"
+        tools:layout="@layout/fragment_see_all" >
+
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_seeAllFragment_to_nav_movie_detail"
+            app:destination="@id/nav_movie_detail"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/personDetailFragment"
+        android:name="com.example.amazonprimeclone.fragments.people.person_details.PersonDetailFragment"
+        android:label="fragment_person_detail"
+        tools:layout="@layout/fragment_person_detail" >
+
+        <argument
+            android:name="person_id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_personDetailFragment_to_nav_movie_detail"
+            app:destination="@id/nav_movie_detail"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+        <action
+            android:id="@+id/action_personDetailFragment_to_seriesDetailFragment"
+            app:destination="@id/seriesDetailFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/youtubeVideoFragment"
+        android:name="com.example.amazonprimeclone.fragments.Utils.Youtube.YoutubeVideoFragment"
+        android:label="fragment_youtube_video"
+        tools:layout="@layout/fragment_youtube_video" >
+
+        <argument
+            android:name="videos_list"
+            app:argType="java.util.ArrayList"/>
+
+        <argument
+            android:name="position"
+            app:argType="integer"
+            />
+        <action
+            android:id="@+id/action_youtubeVideoFragment_self"
+            app:destination="@id/youtubeVideoFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/seriesDetailFragment"
+        android:name="com.example.amazonprimeclone.fragments.home.details.series_detail.SeriesDetailFragment"
+        android:label="fragment_series_detail"
+        tools:layout="@layout/fragment_series_detail" >
+
+        <argument
+            android:name="series_id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_seriesDetailFragment_self"
+            app:destination="@id/seriesDetailFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+        <action
+            android:id="@+id/action_seriesDetailFragment_to_youtubeVideoFragment"
+            app:destination="@id/youtubeVideoFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+        <action
+            android:id="@+id/action_seriesDetailFragment_to_personDetailFragment"
+            app:destination="@id/personDetailFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/myListFragment"
+        android:name="com.example.amazonprimeclone.fragments.home.mylist.MyListFragment"
+        android:label="fragment_my_list"
+        tools:layout="@layout/fragment_my_list" />
+</navigation>
