@@ -94,9 +94,11 @@ public class MovieDetailFragment extends Fragment {
                 if(exits){
                     movieDetailViewModel.deleteMovie();
                     binding.favoriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_like_svgrepo_com));
+                    exits = false;
                 }else{
-                    movieDetailViewModel.insertMovie();
+                    movieDetailViewModel.insertMovie(binding.movieTitleTv.getText().toString());
                     binding.favoriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_like_red));
+                    exits = true;
                 }
             });
         });

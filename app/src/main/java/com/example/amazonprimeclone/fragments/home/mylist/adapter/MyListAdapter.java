@@ -42,10 +42,16 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyListView
         holder.category.setText(responseResults.getRelease_date());
 
         holder.itemView.setOnClickListener(v -> {
+            if(responseResults.isMovie()){
+                HomeFragmentDirections.ActionNavHomeToNavMovieDetail toNavMovieDetail =
+                        HomeFragmentDirections.actionNavHomeToNavMovieDetail(String.valueOf(responseResults.getId()));
+                Navigation.findNavController(holder.itemView).navigate(toNavMovieDetail);
+            }else{
+                HomeFragmentDirections.ActionNavHomeToSeriesDetailFragment toSeriesDetailFragment =
+                        HomeFragmentDirections.actionNavHomeToSeriesDetailFragment(String.valueOf(responseResults.getId()));
+                Navigation.findNavController(holder.itemView).navigate(toSeriesDetailFragment);
+            }
 
-            HomeFragmentDirections.ActionNavHomeToNavMovieDetail toNavMovieDetail =
-                    HomeFragmentDirections.actionNavHomeToNavMovieDetail(String.valueOf(responseResults.getId()));
-            Navigation.findNavController(holder.itemView).navigate(toNavMovieDetail);
         });
 
     }

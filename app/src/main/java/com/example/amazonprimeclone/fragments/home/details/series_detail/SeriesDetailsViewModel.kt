@@ -7,24 +7,20 @@ import androidx.lifecycle.viewModelScope
 import com.example.amazonprimeclone.data.local.repository.MovieAndSeriesRepository
 import com.example.amazonprimeclone.data.remote.Constants
 import com.example.amazonprimeclone.modal.CastandCredits.Series.SeriesCast
-import com.example.amazonprimeclone.modal.CastandCredits.Series.SeriesCredits
 import com.example.amazonprimeclone.modal.MovieDetail.FavoriteMovie
-import com.example.amazonprimeclone.modal.SearchSeries
 import com.example.amazonprimeclone.modal.SeriesDetail.SeriesDetailsModel
 import com.example.amazonprimeclone.modal.SeriesResponseResults
-import com.example.amazonprimeclone.modal.Trailers.TrailerModel
 import com.example.amazonprimeclone.modal.Trailers.TrailerResponse
+import com.example.amazonprimeclone.retrofit.repository.RetrofitMovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 @HiltViewModel
 class SeriesDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val movieAndSeriesRepository: MovieAndSeriesRepository
+    private val movieAndSeriesRepository: MovieAndSeriesRepository,
+    private val retrofitMovieRepository: RetrofitMovieRepository
 ) : ViewModel() {
 
     private val seriesDetailsList: MutableLiveData<SeriesDetailsModel?> = MutableLiveData()
@@ -78,88 +74,42 @@ class SeriesDetailsViewModel @Inject constructor(
             loadSeriesRecommendations()
         }
 
-    private fun loadSeriesRecommendations() {
-        val searchMovieCall =
-            Constants.retrofitService.getSeriesRecommendations(seriesID, Constants.API_KEY)
-        searchMovieCall.enqueue(object : Callback<SearchSeries?> {
-            override fun onResponse(call: Call<SearchSeries?>, response: Response<SearchSeries?>) {
-                if (response.isSuccessful) {
-                    val searchSeries = response.body()
-                    if (searchSeries != null) {
-                        recommendationSeriesData.value = searchSeries.results
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<SearchSeries?>, t: Throwable) {}
-        })
+    private fun loadSeriesRecommendations() = viewModelScope.launch(Dispatchers.IO){
+        val response = retrofitMovieRepository.getSeriesRecommendations(seriesID,Constants.API_KEY)
+        if(response!=null){
+            recommendationSeriesData.postValue(response.results)
+        }
     }
 
-    private fun loadSeriesTrailers() {
-        val movieTrailerCall =
-            Constants.retrofitService.getSeriesTrailers(seriesID, Constants.API_KEY)
-        movieTrailerCall.enqueue(object : Callback<TrailerModel?> {
-            override fun onResponse(call: Call<TrailerModel?>, response: Response<TrailerModel?>) {
-                if (response.isSuccessful) {
-                    val movieTrailer = response.body()
-                    if (movieTrailer != null) {
-                        seriesTrailerResponse.value = movieTrailer.results
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<TrailerModel?>, t: Throwable) {}
-        })
+    private fun loadSeriesTrailers() = viewModelScope.launch(Dispatchers.IO){
+        val response = retrofitMovieRepository.getSeriesTrailers(seriesID,Constants.API_KEY)
+        if(response!=null){
+            seriesTrailerResponse.postValue(response.results)
+        }
     }
 
-    private fun loadSeriesCast() {
-        val movieCastCall =
-            Constants.retrofitService.getSeriesCastDetails(seriesID, Constants.API_KEY)
-        movieCastCall.enqueue(object : Callback<SeriesCredits?> {
-            override fun onResponse(
-                call: Call<SeriesCredits?>,
-                response: Response<SeriesCredits?>
-            ) {
-                if (response.isSuccessful) {
-                    val seriesCredits = response.body()
-                    if (seriesCredits != null) {
-                        seriesCastResponse.value = seriesCredits.cast
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<SeriesCredits?>, t: Throwable) {}
-        })
+    private fun loadSeriesCast() = viewModelScope.launch(Dispatchers.IO) {
+        val response = retrofitMovieRepository.getSeriesCastDetails(seriesID,Constants.API_KEY)
+        if(response!=null){
+            seriesCastResponse.postValue(response.cast)
+        }
     }
 
-    private fun loadSeriesDetails() {
-        val movieDetailsModelCall =
-            Constants.retrofitService.getSeriesDetails(seriesID, Constants.API_KEY)
-        movieDetailsModelCall.enqueue(object : Callback<SeriesDetailsModel?> {
-            override fun onResponse(
-                call: Call<SeriesDetailsModel?>,
-                response: Response<SeriesDetailsModel?>
-            ) {
-                if (response.isSuccessful) {
-                    seriesDetailsList.value = response.body()
-                    if (response.body() != null) {
-                        favoriteMovie = FavoriteMovie(
-                            response.body()!!.id,
-                            response.body()!!.vote_average.toFloat(),
-                            response.body()!!
-                                .name,
-                            response.body()!!.posterUrl,
-                            response.body()!!.original_language,
-                            response.body()!!.overview,
-                            response.body()!!
-                                .first_air_date
-                        )
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<SeriesDetailsModel?>, t: Throwable) {}
-        })
+    private fun loadSeriesDetails() = viewModelScope.launch(Dispatchers.IO){
+        val response = retrofitMovieRepository.getSeriesDetails(seriesID,Constants.API_KEY)
+        if(response!= null){
+            seriesDetailsList.postValue(response)
+            favoriteMovie = FavoriteMovie(
+                response.id,
+                response.vote_average.toFloat(),
+                response.name,
+                response.posterUrl,
+                response.original_language,
+                response.overview,
+                response.first_air_date,
+                false
+            )
+        }
     }
 
 }

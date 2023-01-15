@@ -12,5 +12,6 @@ data class MovieAndSeriesData(
     val poster_path: String,
     val original_language: String,
     val overview: String,
-    val release_date: String
+    val release_date: String,
+    val isMovie:Boolean
 )

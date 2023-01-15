@@ -27,6 +27,8 @@ public interface RetrofitService {
     //https://api.themoviedb.org/3/search/person?api_key="YOUR_API_KEY"&query="ACTOR_NAME"
     //api to get the persons name
 
+
+
     @GET("search/movie")
     Call<SearchMovie> getMoviesByQuery(@Query("api_key")String api_key,@Query("query")String query);
 
