@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import com.example.amazonprimeclone.data.local.MovieDatabase
 import com.example.amazonprimeclone.retrofit.RetrofitApiServices
-import com.example.amazonprimeclone.retrofit.RetrofitClientService
 import com.example.amazonprimeclone.retrofit.network.RecommendationApiService
 import dagger.Module
 import dagger.Provides
@@ -14,8 +13,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
-import retrofit2.http.Url
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -49,7 +46,7 @@ object AppModule {
     @Named("Recommendation")
     fun providesRetrofitBuilder() : Retrofit =
         Retrofit.Builder()
-            .baseUrl("http://127.0.0.1:5000")
+            .baseUrl("https://recommendations-app-k2wt.onrender.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

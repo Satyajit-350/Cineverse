@@ -1,11 +1,14 @@
 package com.example.amazonprimeclone.fragments.home.details.movie_detail
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.amazonprimeclone.data.local.modals.RecommendedMovies
 import com.example.amazonprimeclone.data.local.repository.MovieAndSeriesRepository
+import com.example.amazonprimeclone.data.local.repository.MovieRecommendationRepository
 import com.example.amazonprimeclone.data.remote.Constants
 import com.example.amazonprimeclone.modal.CastandCredits.Movies.MovieCast
 import com.example.amazonprimeclone.modal.MovieDetail.FavoriteMovie
@@ -15,6 +18,7 @@ import com.example.amazonprimeclone.modal.RecommendationData.RecommendationData
 import com.example.amazonprimeclone.modal.Trailers.TrailerResponse
 import com.example.amazonprimeclone.retrofit.network.repository.RecommendationRepository
 import com.example.amazonprimeclone.retrofit.repository.RetrofitMovieRepository
+import com.example.amazonprimeclone.retrofit.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,7 +29,8 @@ class MovieDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieAndSeriesRepository: MovieAndSeriesRepository,
     private val recommendationRepository: RecommendationRepository,
-    private val retrofitMovieRepository: RetrofitMovieRepository
+    private val retrofitMovieRepository: RetrofitMovieRepository,
+    private val movieRecommendationRepository: MovieRecommendationRepository
 ) :
     ViewModel() {
     val recommendationMovieData: MutableLiveData<List<MovieResponseResults>> = MutableLiveData()
@@ -51,17 +56,22 @@ class MovieDetailsViewModel @Inject constructor(
         movieAndSeriesRepository.insert(favoriteMovie!!)
         //for recommendations
         try {
-            val recommendationData: RecommendationData = recommendationRepository.getRecommendedMovies(movieName)
-            //add in the database
-            Log.d("response",recommendationData.get(0).movieName)
+            val response = recommendationRepository.getRecommendedMovies(movieName)
+            Log.d("response",response.get(0).movieName)
+            //TODO add the response from recommendation to the database
+            for (movies in response) {
+                //insert into the database
+                movieRecommendationRepository.insert(RecommendedMovies(movies.movieId,movies.movieName,movies.poster))
+            }
+
         } catch (e: Exception) {
             e.printStackTrace()
             Log.d("response",e.message.toString())
         }
 
-        //TODO add the response from recommendation to the database
-
     }
+
+
 
     fun deleteMovie() {
         movieAndSeriesRepository.delete(favoriteMovie!!)
@@ -79,6 +89,7 @@ class MovieDetailsViewModel @Inject constructor(
 
         val response = retrofitMovieRepository.getMovieDetails(movieID,Constants.API_KEY)
         if(response!=null){
+
             movieDetails.postValue(response)
             favoriteMovie = FavoriteMovie(
                 response.id,

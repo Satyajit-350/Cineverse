@@ -14,7 +14,7 @@
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/series_slider_pager"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="400dp"
             android:layout_margin="8dp"
             app:sliderAnimationDuration="500"
             app:sliderAutoCycleDirection="back_and_forth"

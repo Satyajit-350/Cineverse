@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.amazonprimeclone.data.local.modals.RecommendedMovies;
+import com.example.amazonprimeclone.data.local.repository.MovieRecommendationRepository;
 import com.example.amazonprimeclone.modal.MovieCategory;
 import com.example.amazonprimeclone.modal.MovieCategoryResults;
 import com.example.amazonprimeclone.modal.MovieResponseResults;
@@ -15,18 +17,27 @@ import com.example.amazonprimeclone.data.remote.Constants;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@HiltViewModel
 public class MovieFragmentViewModel extends ViewModel {
 
+    private final MovieRecommendationRepository recommendationRepository;
     private final MutableLiveData<List<MovieResponseResults>> slideList;
     private final MutableLiveData<List<MovieCategoryResults>> resultsList;
+    public final LiveData<List<RecommendedMovies>> recommendationList;
 
-    public MovieFragmentViewModel(){
+    @Inject
+    public MovieFragmentViewModel(MovieRecommendationRepository recommendationRepository){
         slideList = new MutableLiveData<>();
         resultsList = new MutableLiveData<>();
+        this.recommendationRepository = recommendationRepository;
+        recommendationList = recommendationRepository.getAllRecommendedMovies();
         loadData();
     }
 

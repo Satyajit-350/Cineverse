@@ -8,23 +8,26 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.amazonprimeclone.adapters.home.HomeMovieAdapter;
+import com.example.amazonprimeclone.adapters.home.RecommendationAdapter;
 import com.example.amazonprimeclone.adapters.home.slider.MovieSliderAdapter;
 import com.example.amazonprimeclone.databinding.FragmentMovieBinding;
 import com.example.amazonprimeclone.fragments.home.HomeFragmentDirections;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class MovieFragment extends Fragment {
 
     private FragmentMovieBinding binding;
     private MovieFragmentViewModel movieFragmentViewModel;
     private MovieSliderAdapter movieSliderAdapter;
+    private RecommendationAdapter recommendationAdapter;
     private HomeMovieAdapter adapter;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -48,13 +51,32 @@ public class MovieFragment extends Fragment {
         movieFragmentViewModel.getResultsList().observe(getViewLifecycleOwner(), movieCategoryResults -> {
             adapter = new HomeMovieAdapter(movieCategoryResults, (title, id) -> {
                 HomeFragmentDirections.ActionNavHomeToSeeAllFragment actionNavHomeToSeeAllFragment = HomeFragmentDirections.actionNavHomeToSeeAllFragment(title,id);
-                Navigation.findNavController(binding.getRoot()).navigate((NavDirections) actionNavHomeToSeeAllFragment);
+                Navigation.findNavController(binding.getRoot()).navigate(actionNavHomeToSeeAllFragment);
             });
             binding.rvMain.setAdapter(adapter);
         });
 
+        handleRecommendations();
+
         handleSlider();
 
+    }
+
+    private void handleRecommendations() {
+        movieFragmentViewModel.recommendationList.observe(getViewLifecycleOwner(), recommendedMovies ->{
+            if(recommendedMovies.isEmpty()){
+                binding.pickedTv.setVisibility(View.GONE);
+                binding.recommendationRvHorizontal.setVisibility(View.GONE);
+            }else{
+                binding.pickedTv.setVisibility(View.VISIBLE);
+                binding.recommendationRvHorizontal.setVisibility(View.VISIBLE);
+            }
+            recommendationAdapter = new RecommendationAdapter(recommendedMovies, id -> {
+                HomeFragmentDirections.ActionNavHomeToNavMovieDetail actionNavHomeToNavMovieDetail = HomeFragmentDirections.actionNavHomeToNavMovieDetail(id);
+                Navigation.findNavController(binding.getRoot()).navigate(actionNavHomeToNavMovieDetail);
+            });
+            binding.recommendationRvHorizontal.setAdapter(recommendationAdapter);
+        });
     }
 
     private void handleSlider() {
