@@ -34,9 +34,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     namespace 'com.example.amazonprimeclone'
-    buildTypes.each{
-        it.buildConfigField("String","AIzaSyBE2b18Pvj5XpZiTK3Io1ctzzd9YgORQB8",GoogleCloudApiKey)
-    }
 }
 
 dependencies {
