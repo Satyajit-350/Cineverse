@@ -36,11 +36,14 @@ public class MyListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel.getGetMovieData().observe(getViewLifecycleOwner(), movieAndSeriesData -> {
+            if(movieAndSeriesData.size()>0){
+                binding.emptyAnimation.setVisibility(View.GONE);
+            }else{
+                binding.emptyAnimation.setVisibility(View.VISIBLE);
+            }
             myListAdapter = new MyListAdapter(movieAndSeriesData);
             binding.allMoviesRv.setAdapter(myListAdapter);
         });
-
-
     }
 
     @Override
