@@ -1,5 +1,6 @@
 package com.example.amazonprimeclone.fragments.people;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,9 @@ import android.view.ViewGroup;
 import com.example.amazonprimeclone.adapters.people.PeopleSearchAdapter;
 import com.example.amazonprimeclone.databinding.FragmentPeopleBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class PeopleFragment extends Fragment {
 
     private FragmentPeopleBinding binding;
@@ -31,6 +35,7 @@ public class PeopleFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -38,7 +43,7 @@ public class PeopleFragment extends Fragment {
         binding.peopleSearchRv.setLayoutManager(new GridLayoutManager(getContext(),2));
         binding.peopleSearchRv.setHasFixedSize(true);
 
-        peopleFragmentViewModel.getPopularPersonList().observe(getViewLifecycleOwner(), personResponseResults -> {
+        peopleFragmentViewModel.getPopularPersonLists().observe(getViewLifecycleOwner(), personResponseResults -> {
             searchAdapter = new PeopleSearchAdapter(getContext(),personResponseResults);
             binding.peopleSearchRv.setAdapter(searchAdapter);
             searchAdapter.notifyDataSetChanged();
@@ -52,11 +57,20 @@ public class PeopleFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                peopleFragmentViewModel.getPerformPersonListSearch(String.valueOf(s)).observe(getViewLifecycleOwner(), personResponseResults -> {
-                    searchAdapter = new PeopleSearchAdapter(getContext(),personResponseResults);
-                    binding.peopleSearchRv.setAdapter(searchAdapter);
-                    searchAdapter.notifyDataSetChanged();
-                });
+                if(count!=0){
+                    peopleFragmentViewModel.getPerformPersonListSearch(String.valueOf(s)).observe(getViewLifecycleOwner(), personResponseResults -> {
+                        searchAdapter = new PeopleSearchAdapter(getContext(),personResponseResults);
+                        binding.peopleSearchRv.setAdapter(searchAdapter);
+                        searchAdapter.notifyDataSetChanged();
+                    });
+                }else{
+                    peopleFragmentViewModel.getPopularPersonLists().observe(getViewLifecycleOwner(), personResponseResults -> {
+                        searchAdapter = new PeopleSearchAdapter(getContext(),personResponseResults);
+                        binding.peopleSearchRv.setAdapter(searchAdapter);
+                        searchAdapter.notifyDataSetChanged();
+                    });
+                }
+
             }
 
             @Override

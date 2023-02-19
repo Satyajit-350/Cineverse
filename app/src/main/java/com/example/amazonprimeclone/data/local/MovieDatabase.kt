@@ -9,9 +9,6 @@ import com.example.amazonprimeclone.data.local.modals.RecommendedMovies
 
 @Database(entities = [MovieAndSeriesData::class,RecommendedMovies::class], version = 1, exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
-
     abstract fun movieAndSeriesDao():MovieAndSeriesDao
-
     abstract fun recommendationDao():RecommendationDao
-
 }

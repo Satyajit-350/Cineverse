@@ -14,6 +14,9 @@ import com.example.amazonprimeclone.adapters.home.HomeSeriesAdapter;
 import com.example.amazonprimeclone.adapters.home.slider.SeriesSliderAdapter;
 import com.example.amazonprimeclone.databinding.FragmentSeriesBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class SeriesFragment extends Fragment {
 
     private FragmentSeriesBinding binding;

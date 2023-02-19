@@ -20,12 +20,6 @@ import com.example.amazonprimeclone.databinding.ActivitySplashScreenBinding;
 @SuppressLint("CustomSplashScreen")
 public class SplashScreenActivity extends AppCompatActivity {
 
-    public static final int STARTUP_DELAY = 300;
-    public static final int ANIM_ITEM_DURATION = 1000;
-    public static final int ITEM_DELAY = 300;
-
-    private boolean animationStarted = false;
-
     private ActivitySplashScreenBinding binding;
 
     @Override
@@ -43,7 +37,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try{
-                    sleep(5835);
+                    sleep(1900);
                 }catch (Exception e){
                     e.printStackTrace();
                 }finally {

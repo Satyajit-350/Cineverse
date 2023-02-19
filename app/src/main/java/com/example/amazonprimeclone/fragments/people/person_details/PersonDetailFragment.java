@@ -18,8 +18,10 @@ import com.bumptech.glide.Glide;
 import com.example.amazonprimeclone.adapters.home.MovieAdapter;
 import com.example.amazonprimeclone.adapters.SeriesCreditAdapter;
 import com.example.amazonprimeclone.databinding.FragmentPersonDetailBinding;
-import com.example.amazonprimeclone.domain.listeners.DetailClickListeners;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class PersonDetailFragment extends Fragment {
     private FragmentPersonDetailBinding binding;
     private MovieAdapter moviesKnownForAdapter;
@@ -67,13 +69,10 @@ public class PersonDetailFragment extends Fragment {
         });
 
         personDetailsViewModel.getSeriesKnownFor().observe(getViewLifecycleOwner(), seriesKnownForList -> {
-            seriesKnownForAdapter = new SeriesCreditAdapter(getContext(), seriesKnownForList, new DetailClickListeners() {
-                @Override
-                public void onDetailsClickListeners(String id) {
-                    PersonDetailFragmentDirections.ActionPersonDetailFragmentToSeriesDetailFragment personDetailFragmentToSeriesDetailFragment =
-                            PersonDetailFragmentDirections.actionPersonDetailFragmentToSeriesDetailFragment(id);
-                    Navigation.findNavController(binding.getRoot()).navigate(personDetailFragmentToSeriesDetailFragment);
-                }
+            seriesKnownForAdapter = new SeriesCreditAdapter(getContext(), seriesKnownForList, id -> {
+                PersonDetailFragmentDirections.ActionPersonDetailFragmentToSeriesDetailFragment personDetailFragmentToSeriesDetailFragment =
+                        PersonDetailFragmentDirections.actionPersonDetailFragmentToSeriesDetailFragment(id);
+                Navigation.findNavController(binding.getRoot()).navigate(personDetailFragmentToSeriesDetailFragment);
             });
             binding.seriesKnownForRv.setAdapter(seriesKnownForAdapter);
             seriesKnownForAdapter.notifyDataSetChanged();

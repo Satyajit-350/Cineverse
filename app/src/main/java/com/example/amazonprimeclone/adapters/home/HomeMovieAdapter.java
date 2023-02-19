@@ -50,11 +50,8 @@ public class HomeMovieAdapter extends RecyclerView.Adapter<HomeMovieAdapter.Home
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
 
         MovieCategoryResults results = movieList.get(position);
-
         holder.categoryText.setText(results.getName());
-
         holder.recyclerViewHorizontal.setAdapter(movieAdapter);
-
         holder.recyclerViewHorizontal.setRecycledViewPool(recycledViewPool);
 
         Call<SearchMovie> movieResponseCall = Constants.retrofitService.getCategoriesResults(String.valueOf(results.getId()));
@@ -71,17 +68,18 @@ public class HomeMovieAdapter extends RecyclerView.Adapter<HomeMovieAdapter.Home
                     });
                     holder.recyclerViewHorizontal.setAdapter(movieAdapter);
                 }
-
             }
-
             @Override
             public void onFailure(@NonNull Call<SearchMovie> call, @NonNull Throwable t) {
-
             }
         });
 
         holder.seeAllTv.setOnClickListener(v ->
-                sectionMovieClickListener.onSectionMovieClicked(holder.categoryText.getText().toString(),String.valueOf(results.getId())));
+                sectionMovieClickListener.onSectionMovieClicked(
+                        holder.categoryText.getText().toString()
+                        ,String.valueOf(results.getId())
+                )
+        );
 
     }
 
@@ -91,19 +89,15 @@ public class HomeMovieAdapter extends RecyclerView.Adapter<HomeMovieAdapter.Home
     }
 
     public static class HomeViewHolder extends RecyclerView.ViewHolder{
-
         private final RecyclerView recyclerViewHorizontal;
         private final TextView categoryText;
         private final TextView seeAllTv;
-
         public HomeViewHolder(@NonNull View itemView) {
             super(itemView);
-
             recyclerViewHorizontal = itemView.findViewById(R.id.home_recycler_view_horizontal);
             recyclerViewHorizontal.setHasFixedSize(true);
             recyclerViewHorizontal.setNestedScrollingEnabled(false);
             recyclerViewHorizontal.setItemAnimator(new DefaultItemAnimator());
-
             categoryText = itemView.findViewById(R.id.tv_movie_category);
             seeAllTv = itemView.findViewById(R.id.see_all_tv);
         }

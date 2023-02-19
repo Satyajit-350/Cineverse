@@ -36,6 +36,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         selectionPageAdapter = new SelectionPageAdapter(getChildFragmentManager(),requireActivity().getLifecycle());
         selectionPageAdapter.addFragment(new MovieFragment(),"Movies");
         selectionPageAdapter.addFragment(new SeriesFragment(),"Series");

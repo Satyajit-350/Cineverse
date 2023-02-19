@@ -15,16 +15,13 @@ interface RetrofitApiServices {
 
     @GET("search/movie")
     suspend fun getMoviesByQuery(@Query("api_key")api_key:String?, @Query("query")query:String?):SearchMovie?
-
     @GET("search/person")
     suspend fun getPersonByQuery(
         @Query("api_key") api_key: String?,
         @Query("query") query: String?
     ): SearchPerson?
-
     @GET("person/popular")
     suspend fun getPopularPerson(@Query("api_key") api_key: String?): SearchPerson?
-
     //get the movies categories list
     @GET("genre/movie/list")
     suspend fun getCategories(@Query("api_key") api_key: String?): MovieCategory?

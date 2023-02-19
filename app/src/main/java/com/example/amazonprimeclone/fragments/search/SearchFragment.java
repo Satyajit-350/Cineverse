@@ -22,6 +22,9 @@ import com.example.amazonprimeclone.adapters.search.MovieSearchAdapter;
 import com.example.amazonprimeclone.databinding.FragmentSearchBinding;
 import java.util.Objects;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class SearchFragment extends Fragment {
 
     private FragmentSearchBinding binding;

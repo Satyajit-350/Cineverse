@@ -14,9 +14,10 @@ import android.view.ViewGroup;
 import com.example.amazonprimeclone.databinding.FragmentSeeAllBinding;
 import com.example.amazonprimeclone.fragments.home.more.see_all_movies.adapters.SeeAllAdapter;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class SeeAllMoviesFragment extends Fragment {
-
     private FragmentSeeAllBinding binding;
     private SeeAllMoviesViewModel seeAllMoviesViewModel;
     private SeeAllAdapter seeAllAdapter;
@@ -33,7 +34,7 @@ public class SeeAllMoviesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.TitleTv.setText(seeAllMoviesViewModel.title);
+        binding.TitleTv.setText(seeAllMoviesViewModel.getTitle());
 
         seeAllMoviesViewModel.getAllMoviesList().observe(getViewLifecycleOwner(), allMoviesResults -> {
             seeAllAdapter = new SeeAllAdapter(allMoviesResults);

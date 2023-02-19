@@ -63,7 +63,7 @@ public class MovieFragment extends Fragment {
     }
 
     private void handleRecommendations() {
-        movieFragmentViewModel.recommendationList.observe(getViewLifecycleOwner(), recommendedMovies ->{
+        movieFragmentViewModel.getRecommendationList().observe(getViewLifecycleOwner(), recommendedMovies ->{
             if(recommendedMovies.isEmpty()){
                 binding.pickedTv.setVisibility(View.GONE);
                 binding.recommendationRvHorizontal.setVisibility(View.GONE);
