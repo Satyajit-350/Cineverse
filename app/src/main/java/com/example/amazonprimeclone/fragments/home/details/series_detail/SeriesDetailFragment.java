@@ -63,7 +63,7 @@ public class SeriesDetailFragment extends Fragment {
                 Glide.with(binding.moviePoster).load(seriesDetailsModel.getPosterUrl()).into(binding.moviePoster);
                 binding.movieTitleTv.setText(seriesDetailsModel.getName());
                 binding.timeTv.setText(String.valueOf(seriesDetailsModel.getEpisode_run_time()));
-                binding.ratingTv.setText(String.valueOf(seriesDetailsModel.getVote_average()));
+                binding.ratingTv.setText(String.format("%.1f", seriesDetailsModel.getVote_average()));
                 binding.categoryTv.setText(genres.get(0).getName());
             }
         });

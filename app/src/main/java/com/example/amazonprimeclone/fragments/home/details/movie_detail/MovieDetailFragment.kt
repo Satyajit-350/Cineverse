@@ -20,7 +20,8 @@ import com.example.amazonprimeclone.databinding.FragmentMovieDetailBinding
 import com.example.amazonprimeclone.modal.MovieDetail.MovieDetailsModel
 import com.example.amazonprimeclone.modal.MovieResponseResults
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONArray
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
@@ -56,9 +57,16 @@ class MovieDetailFragment : Fragment() {
                     Glide.with(binding!!.moviePoster).load(movieDetailsModel.backdrop_path)
                         .into(binding!!.moviePoster)
                     binding!!.movieTitleTv.setText(movieDetailsModel.title)
-                    binding!!.timeTv.setText(movieDetailsModel.runtime.toString())
-                    binding!!.ratingTv.setText(movieDetailsModel.vote_average.toString())
-                    binding!!.categoryTv.setText(genres[0].name)
+                    //logic to convert the integer into hour and mn format
+                    val hours: Int = movieDetailsModel.runtime / 60 //since both are ints, we get an int
+                    val minutes: Int = movieDetailsModel.runtime % 60
+                    val f: NumberFormat = DecimalFormat("00")
+                    val movieDuration = "${hours}h:${f.format(minutes)}m"
+                    binding!!.timeTv.text = movieDuration
+
+                    val df = DecimalFormat("#.#")
+                    binding!!.ratingTv.text = df.format(movieDetailsModel.vote_average).toString()
+                    binding!!.categoryTv.text = genres[0].name
                 }
             })
         movieDetailViewModel.movieTrailerResponse.observe(viewLifecycleOwner,
