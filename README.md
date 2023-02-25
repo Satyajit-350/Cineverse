@@ -18,4 +18,8 @@ Welcome to Cineverse movie app! This app allows users to browse and discover new
 - [Shimmer](https://facebook.github.io/shimmer-android/) - Shimmer is an Android library that provides an easy way to add a shimmer effect to any view in your Android apps.
 - [Youtube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player) - A stable and customizable open source YouTube player for Android. It provides a simple View that can be easily integrated in every Activity/Fragment.
 
+## Recommendation Engine
+It has a recommndation engine based on the dataset provided.
+You can see and test the api implementation from below given repository 👇
+ -(https://github.com/Satyajit-350/movie_recommendation_flask)
 
