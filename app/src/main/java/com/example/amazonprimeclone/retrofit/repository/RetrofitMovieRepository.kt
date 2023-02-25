@@ -128,5 +128,6 @@ class RetrofitMovieRepository @Inject constructor(private val apiServices: Retro
         val response = apiServices.getSeriesCastDetails(id,api_key)
         return response;
     }
+
     
 }

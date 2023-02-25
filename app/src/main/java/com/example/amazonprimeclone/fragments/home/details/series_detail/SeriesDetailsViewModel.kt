@@ -8,6 +8,7 @@ import com.example.amazonprimeclone.data.local.repository.MovieAndSeriesReposito
 import com.example.amazonprimeclone.data.remote.Constants
 import com.example.amazonprimeclone.modal.CastandCredits.Series.SeriesCast
 import com.example.amazonprimeclone.modal.MovieDetail.FavoriteMovie
+import com.example.amazonprimeclone.modal.SeriesDetail.Season
 import com.example.amazonprimeclone.modal.SeriesDetail.SeriesDetailsModel
 import com.example.amazonprimeclone.modal.SeriesResponseResults
 import com.example.amazonprimeclone.modal.Trailers.TrailerResponse
@@ -27,6 +28,7 @@ class SeriesDetailsViewModel @Inject constructor(
     private val recommendationSeriesData: MutableLiveData<List<SeriesResponseResults>> = MutableLiveData()
     private val seriesTrailerResponse: MutableLiveData<List<TrailerResponse>> = MutableLiveData()
     private val seriesCastResponse: MutableLiveData<List<SeriesCast>> = MutableLiveData()
+    private val seriesSeasonsResponse: MutableLiveData<List<Season>> = MutableLiveData()
 
     private var seriesID: String? = null
     private var favoriteMovie: FavoriteMovie? = null
@@ -65,6 +67,11 @@ class SeriesDetailsViewModel @Inject constructor(
     fun getSeriesCastResponse(): MutableLiveData<List<SeriesCast>> {
         return seriesCastResponse
     }
+    fun getSeriesSeasons(): MutableLiveData<List<Season>> {
+        return seriesSeasonsResponse
+    }
+
+
 
     private val seriesData: Unit
         get() {
@@ -73,6 +80,7 @@ class SeriesDetailsViewModel @Inject constructor(
             loadSeriesTrailers()
             loadSeriesRecommendations()
         }
+
 
     private fun loadSeriesRecommendations() = viewModelScope.launch(Dispatchers.IO){
         val response = retrofitMovieRepository.getSeriesRecommendations(seriesID,Constants.API_KEY)
@@ -99,6 +107,7 @@ class SeriesDetailsViewModel @Inject constructor(
         val response = retrofitMovieRepository.getSeriesDetails(seriesID,Constants.API_KEY)
         if(response!= null){
             seriesDetailsList.postValue(response)
+            seriesSeasonsResponse.postValue(response.seasons)
             favoriteMovie = FavoriteMovie(
                 response.id,
                 response.vote_average.toFloat(),

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.example.amazonprimeclone.R;
 import com.example.amazonprimeclone.adapters.Cast.SeriesCastAdapter;
+import com.example.amazonprimeclone.adapters.SeriesSeasonsAdapter;
 import com.example.amazonprimeclone.adapters.Trailers.SeriesTrailerAdapter;
 import com.example.amazonprimeclone.adapters.home.SeriesAdapter;
 import com.example.amazonprimeclone.databinding.FragmentSeriesDetailBinding;
@@ -34,6 +35,7 @@ public class SeriesDetailFragment extends Fragment {
     private SeriesTrailerAdapter trailerAdapter;
     private SeriesAdapter recommendAdapter;
     private SeriesCastAdapter castAdapter;
+    private SeriesSeasonsAdapter seasonsAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -66,6 +68,11 @@ public class SeriesDetailFragment extends Fragment {
                 binding.ratingTv.setText(String.format("%.1f", seriesDetailsModel.getVote_average()));
                 binding.categoryTv.setText(genres.get(0).getName());
             }
+        });
+
+        seriesDetailViewModel.getSeriesSeasons().observe(getViewLifecycleOwner(), seriesSeasons->{
+            seasonsAdapter = new SeriesSeasonsAdapter(seriesSeasons);
+            binding.seasonsRv.setAdapter(seasonsAdapter);
         });
 
         seriesDetailViewModel.getSeriesTrailerResponse().observe(getViewLifecycleOwner(), seriesTrailerResponses -> {
