@@ -17,11 +17,6 @@
         android:theme="@style/Theme.AmazonPrimeClone"
         tools:targetApi="31">
         <activity
-            android:name=".splashScreen.SplashScreenActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
             android:exported="true"
