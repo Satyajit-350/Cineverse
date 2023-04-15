@@ -3,6 +3,8 @@
 Welcome to Cineverse movie app! This app allows users to browse and discover new movies, create and share lists of their favorite films, and get personalized recommendations based on their likes.
 </p>
 
+<img src="/preview/preview_1.mp4" align="right" width="30%"/>
+
 ## Techs Used 💻
 - Java and Kotlin based
 - [Dagger-Hilt](https://dagger.dev/hilt/) - Standard library to incorporate Dagger dependency injection into an Android application.
