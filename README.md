@@ -3,7 +3,11 @@
 Welcome to Cineverse movie app! This app allows users to browse and discover new movies, create and share lists of their favorite films, and get personalized recommendations based on their likes.
 </p>
 
-<img src="/preview/preview_1.mp4" align="right" width="30%"/>
+<p align="center">
+<img src="Cineverse/preview/preview_poster.jpg">
+</p>
+
+<img src="Cineverse/preview/preview_gif.gif" align="right" width="30%"/>
 
 ## Techs Used 💻
 - Java and Kotlin based
