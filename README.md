@@ -1,9 +1,15 @@
 <h1 align="center">Cineverse</h1>
 <p align="center"> 
 Welcome to Cineverse movie app! This app allows users to browse and discover new movies, create and share lists of their favorite films, and get personalized recommendations based on their likes.
+<br>
 </p>
+<br>
 
-<img src="/preview/preview_1.mp4" align="right" width="30%"/>
+<p align = "center">
+<img src = "https://github.com/Satyajit-350/Cineverse/blob/master/preview/preview_poster.jpg">
+ </p>
+
+<img src="https://github.com/Satyajit-350/Cineverse/blob/master/preview/preview_gif.gif" align="right"/>
 
 ## Techs Used 💻
 - Java and Kotlin based
