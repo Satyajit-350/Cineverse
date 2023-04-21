@@ -6,7 +6,7 @@ Welcome to Cineverse movie app! This app allows users to browse and discover new
 <br>
 
 <p align = "center">
-<img src = "https://github.com/Satyajit-350/Cineverse/blob/master/preview/preview_poster.jpg">
+<img src = "https://github.com/Satyajit-350/Cineverse/blob/master/preview/poster.jpg">
  </p>
 
 <img src="https://github.com/Satyajit-350/Cineverse/blob/master/preview/preview_gif.gif" align="right"/>
