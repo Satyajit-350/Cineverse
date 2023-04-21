@@ -28,6 +28,6 @@ Welcome to Cineverse movie app! This app allows users to browse and discover new
 
 ## Recommendation Engine
 It has a recommndation engine based on the dataset provided.
-You can see and test the api implementation from below given repository 👇
+You can see and test the api implementation from below given repository 👉
  -(https://github.com/Satyajit-350/movie_recommendation_flask)
 
